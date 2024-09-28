@@ -1,6 +1,6 @@
 'use client'; 
-import Folder from "~/components/ui/Folder";
-import { useFolder } from '~/components/ui/FolderContext';
+import Folder from "../components/ui/Folder";
+import { useFolder } from '../components/ui/FolderContext';
 
 export default function HomePage() {
   const { folderName } = useFolder(); // Access the folder name from context

@@ -10,8 +10,8 @@ import {
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import Greeting from "../components/ui/Greeting";
-import { FolderProvider } from "~/components/ui/FolderContext";
-import Navbar from "~/components/ui/Navbar";
+import { FolderProvider } from "../components/ui/FolderContext";
+import Navbar from "../components/ui/Navbar";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
