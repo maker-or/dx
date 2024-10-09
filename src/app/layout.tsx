@@ -13,6 +13,8 @@ import Navbar from "../components/ui/Navbar";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import Cmd from "~/components/ui/Cmd";
+
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -41,6 +43,7 @@ export default function RootLayout({
           <div className="p-6 m-1">
            <Greeting/>
           <Navbar/> 
+            <Cmd/>
           <FolderProvider>  
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
           {children}
