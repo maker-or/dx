@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useFolder } from '../../components/ui/FolderContext';
 import { UploadButton  } from '../../utils/uploadthing';
-import Image from 'next/image'
 import Link from 'next/link';
 
 interface ClientComponentProps {

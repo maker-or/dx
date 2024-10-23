@@ -24,12 +24,14 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
       console.log("file url", file.url);
-
       // Insert uploaded file details into the database
       await db.insert(posts).values({
         name: file.name,
         url: file.url,
         userId: metadata.userId, // Use the Clerk userId from metadata
+        folderId: 1, // Assuming a default folderId for simplicity
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
 
       // Return metadata for the client-side callback

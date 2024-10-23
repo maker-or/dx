@@ -35,10 +35,10 @@ const Navbar = () => {
           </li> */}
 
           <li className="px-2">
-            <Link href="/Repos">
+            <Link href="/repo">
               <button
                 className={`rounded-full px-4 py-3 ${
-                  isActive('/Repos') ? 'bg-[#FF5E00] text-[#0c0c0c]' : ''
+                  isActive('/repo') ? 'bg-[#434080] text-[#f7eee3]' : ''
                 }`}
               >
                 Repos
