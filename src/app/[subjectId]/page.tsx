@@ -1,7 +1,7 @@
 import React from 'react'
 import ServerComponent from '~/components/ui/ServerComponent'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
     <ServerComponent/>
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
