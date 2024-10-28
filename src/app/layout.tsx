@@ -7,13 +7,23 @@ import {
 } from '@clerk/nextjs'
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import Greeting from "../components/ui/Greeting";
+// import Greeting from "../components/ui/Greeting";
 import { FolderProvider } from "../components/ui/FolderContext";
-import Navbar from "../components/ui/Navbar";
+// import Navbar from "../components/ui/Navbar";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import Cmd from "~/components/ui/Cmd";
+import { Instrument_Serif,  } from 'next/font/google'
+
+const Inst = Instrument_Serif({
+  weight: "400", // Added weight property
+  subsets: ['latin'],
+  display: 'swap',
+  style: 'italic'
+
+})
+
 
 
 export const metadata: Metadata = {
@@ -28,7 +38,7 @@ export default function RootLayout({
 
   return (
     <ClerkProvider>
-          <html lang="en" className={`${GeistSans.variable}`}>
+          <html lang="en" className={`${GeistSans.variable} ${Inst.className}`}>
       
         <body>
         <SignedOut>
@@ -41,9 +51,9 @@ export default function RootLayout({
 
         <SignedIn>
           <div className="p-6 m-1">
-           <Greeting/>
-          <Navbar/> 
-            <Cmd/>
+           {/* <Greeting/>
+          <Navbar/>  */}
+          <Cmd/>
           <FolderProvider>  
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
           {children}
