@@ -13,33 +13,20 @@ const Navbar = () => {
 
   return (
     <nav className="py-5">
-      <div   className="items-center flex">
+      <div className="items-center flex">
         <ul className="inline-flex flex-row items-center mx-auto bg-[#1f1f1f] py-2.5 px-3 rounded-full border text-[#646464] text-[1.2rem] font-medium">
           <li className="px-2">
-          <Link href="/ai">
-  <Image src="/men.png" alt="logo" width={100} height={50} />
-</Link>
+            <Link href="/ai" target="_blank">
+              <Image src="/men.png" alt="logo" width={100} height={50} />
+            </Link>
           </li>
 
-
-          {/* <li className="px-2">
-            <Link href="/Forum">
-              <button
-                className={`rounded-full px-4 py-3 ${
-                  isActive('/Forum') ? 'bg-[#FF5E00] text-[#0c0c0c]' : ''
-                }`}
-              >
-                Forum
-              </button>
-            </Link>
-          </li> */}
 
           <li className="px-2">
             <Link href="/repo">
               <button
-                className={`rounded-full px-4 py-3 ${
-                  isActive('/repo') ? 'bg-[#434080] text-[#f7eee3]' : ''
-                }`}
+                className={`rounded-full px-4 py-3 ${isActive('/repo') ? 'bg-[#434080] text-[#f7eee3]' : ''
+                  }`}
               >
                 Repos
               </button>
@@ -49,9 +36,8 @@ const Navbar = () => {
           <li className="px-2">
             <Link href="/">
               <button
-                className={`rounded-full px-4 py-3 ${
-                  isActive('/') ? 'bg-[#FF5E00] text-[#0c0c0c]' : ''
-                }`}
+                className={`rounded-full px-4 py-3 ${isActive('/') ? 'bg-[#FF5E00] text-[#0c0c0c]' : ''
+                  }`}
               >
                 Space
               </button>
@@ -62,5 +48,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import Folder from '~/components/ui/Folder';
 import { useFolder } from '~/components/ui/FolderContext';
@@ -70,7 +71,7 @@ const Fold = () => {
                     +
                 </button>
             </div>
-            <div className="flex flex-wrap w-full">
+            <div className="flex w-full overflow-x-auto">
                 {folders.map((folder) => (
                     <Folder 
                         key={folder.id} 

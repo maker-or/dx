@@ -18,7 +18,7 @@ export async function GET() {
     if (userFolders.length === 0) {
         const defaultFolder = await db.insert(folders).values({
             userId,
-            folderName: "Default Folder"
+            folderName: "Folder"
         }).returning();
         return NextResponse.json(defaultFolder);
     }

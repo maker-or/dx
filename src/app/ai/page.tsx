@@ -31,10 +31,10 @@ export default function Page() {
       
       {/* Conditionally render the title based on the `submitted` state */}
       {!submitted && (
-        <h1 className="flex items-center justify-center italic text-[4rem] mb-6">Ask anything</h1>
+        <h1 className="flex items-center justify-center italic text-[4rem]">Ask anything</h1>
       )}
 
-      <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+      <div className="flex flex-col w-full max-w-md py-24 mx-auto  stretch">
         <div className="space-y-4">
           {messages.map((m) => (
             <div key={m.id} className="whitespace-pre-wrap">
@@ -46,9 +46,9 @@ export default function Page() {
           ))}
         </div>
 
-        <form onSubmit={onSubmit} className="w-full max-w-xl  flex items-center justify-center bg-slate-500">
+        <form onSubmit={onSubmit} className="w-full max-w-xl  flex items-center justify-center ">
           {/* Adjust input field position based on `submitted` state */}
-          <div className={`${submitted ? 'fixed bottom-9' : 'flex justify-center '} mb-12 w-full max-w-xl bg-[#FFF8E7] rounded-full px-2`}>
+          <div className={`${submitted ? 'fixed bottom-9' : ' justify-center '} flex mb-10 w-full max-w-2xl bg-[#FFF8E7] rounded-full px-2`}>
           <div className=" inset-y-0 left-0 flex items-center pl-3">
               <Sparkles className="h-6 w-6 text-orange-500" />
             </div>

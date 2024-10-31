@@ -1,8 +1,8 @@
 'use client';
 import CalendarTimeline from "~/components/ui/CalendarTimeline";
 import Fold from "~/components/ui/Fold";
- import Greeting from "~/components/ui/Greeting";
- import Navbar from "~/components/ui/Navbar";
+import Greeting from "~/components/ui/Greeting";
+import Navbar from "~/components/ui/Navbar";
 
 export default function HomePage() {
 

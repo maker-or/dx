@@ -1,14 +1,14 @@
 import React from 'react'
 import Link from 'next/link';
-  // import Greeting from "~/components/ui/Fold";
-  // import Navbar from "~/components/ui/Fold";
+  import Greeting from "~/components/ui/Greeting";
+  import Navbar from "~/components/ui/Navbar";
 // import Navyear from '~/components/ui/Navyear'
 
 const page = () => {
   return (
     <div>
-                 {/* <Greeting/>
-                 <Navbar/>  */}
+                 <Greeting/>
+                 <Navbar/> 
     <h1 className='text-3xl mt-4 mb-4'>Subject</h1>
     <div className="flex flex-wrap gap-6 w-full">
        
