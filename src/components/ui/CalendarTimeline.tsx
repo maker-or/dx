@@ -124,7 +124,7 @@ export default function CalendarTimeline() {
   const filteredEvents = events.filter((event) => event.date === selectedDate);
 
   return (
-    <div className="bg-neutral-900 text-white p-6 rounded-lg w-full mx-auto">
+    <div className="bg-neutral-900 text-[#f7eee3] p-6 rounded-lg w-full mx-auto ">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{monthNames[currentMonth]}</h1>
         <div className="flex items-center space-x-2">
@@ -156,11 +156,11 @@ export default function CalendarTimeline() {
       </div>
 
       {/* Events box for the selected date */}
-      <div className="relative h-40" id="box">
+      <div className="relative h-40 overflow-y-auto" id="box" >
         {filteredEvents.map((event, index) => (
           <div
             key={event.id || index}
-            className="absolute h-8 bg-neutral-800 rounded-md flex items-center justify-center p-2 text-white"
+            className="absolute h-8 bg-neutral-800 rounded-md flex items-center justify-center p-2  text-white"
             style={{
               left: '0',
               right: '0',
@@ -172,7 +172,7 @@ export default function CalendarTimeline() {
               <input
                 ref={inputRef}
                 type="text"
-                className="bg-neutral-800 text-white p-1 w-full"
+                className="bg-neutral-800 text-white p-1 w-full  "
                 value={editText}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}

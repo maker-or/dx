@@ -23,6 +23,7 @@ const Inst = Instrument_Serif({
   style: 'italic'
 
 })
+import { CSPostHogProvider } from '~/app/_analytics/providers'
 
 
 
@@ -38,6 +39,7 @@ export default function RootLayout({
 
   return (
     <ClerkProvider>
+      <CSPostHogProvider>
           <html lang="en" className={`${GeistSans.variable} ${Inst.className}`}>
       
         <body>
@@ -67,6 +69,7 @@ export default function RootLayout({
         
         </body>
     </html>
+    </CSPostHogProvider>
     </ClerkProvider>
 
   );
