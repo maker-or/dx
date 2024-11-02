@@ -65,3 +65,6 @@ body{
 .folderContainer::-webkit-scrollbar {
   display: none;
 }
+.custom-gradient {
+  background: conic-gradient(from -89.86deg at 50% 50%, #EAEAEA 0deg, #666666 360deg);
+}
