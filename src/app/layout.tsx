@@ -29,7 +29,7 @@ import { CSPostHogProvider } from '~/app/_analytics/providers'
 
 export const metadata: Metadata = {
   title: "Sphere",
-  description: "AI-pwered knowledge base",
+  description: "AI-powered knowledge management platform",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

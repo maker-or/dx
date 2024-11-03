@@ -154,7 +154,14 @@ const subjects: SubjectsByBranch = {
       'Chapter 4-1': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSM%2FIPP%2FIPP%20UNIT-IV%20Part-I%20Image%20Segmentation.pdf?alt=media&token=748afb72-9c0a-4652-a0f5-d090ed47d160', 
       'Chapter 4-2': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSM%2FIPP%2FIPP%20Unit-IV%20Part-II_Morphological%20Image%20Processing.pdf?alt=media&token=3b654107-46da-4bcb-aff7-4a074cbd5531',
       'Chapter 5': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSM%2FIPP%2FIPP%20UNIT-V%20Image%20Compression.pdf?alt=media&token=e84cef75-7dc3-41e0-9319-cf8bd21cfc11',
-    }
+    },
+    'ML':{
+      'Chapter 1': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSO%2FML%2FMachine%20Learning%20intro.pdf?alt=media&token=edb61190-4844-4025-a5c0-3f42f5e309a5',
+      'Chapter 2': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSO%2FML%2FML%20UNIT-II.pdf?alt=media&token=7e1183f2-09c2-4457-b246-76e872c88b8d',
+      'Chapter 3': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSO%2FML%2Funit%20-III.pdf?alt=media&token=cd418cb9-388b-47ac-92e1-49c2e1d79359',
+      'Chapter 4': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSO%2FML%2FUNIT-IV.pdf?alt=media&token=68fdbc82-4d16-4cc6-8ec4-c9c08f5a1ffa',
+      'Chapter 5': 'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSO%2FML%2FUNIT-V.pdf?alt=media&token=fab8e32f-aaa6-4061-a4cb-4a11772c8d6e',
+    },
   },
   CIC: {},
   AI: {},
