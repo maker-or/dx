@@ -15,7 +15,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import Cmd from "~/components/ui/Cmd";
 import { Instrument_Serif,  } from 'next/font/google'
-
+import { Analytics } from "@vercel/analytics/react"
 const Inst = Instrument_Serif({
   weight: "400", // Added weight property
   subsets: ['latin'],
@@ -40,6 +40,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <CSPostHogProvider>
+      <Analytics/>
           <html lang="en" className={`${GeistSans.variable} ${Inst.className}`}>
       
         <body>
