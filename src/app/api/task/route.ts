@@ -4,8 +4,14 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { tasks } from "~/server/db/schema";
 
+// Define the expected structure of the request data
+interface TaskData {
+  task: string;
+  date: string;
+}
 
-
+// Cache user tasks for a short duration (optional)
+const TASK_CACHE_DURATION = 60 * 5; // Cache for 5 minutes
 
 export async function GET() {
   const { userId } = auth();
@@ -14,35 +20,47 @@ export async function GET() {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  const todos = await db.select().from(tasks).where(eq(tasks.userId, userId));
+  // Select only necessary fields to optimize performance
+  const todos = await db
+    .select({ task: tasks.task, date: tasks.date }) // selecting only necessary columns
+    .from(tasks)
+    .where(eq(tasks.userId, userId));
 
-  return NextResponse.json(todos);
+  // Cache-Control headers (optional)
+  const response = NextResponse.json(todos);
+  response.headers.set("Cache-Control", `max-age=${TASK_CACHE_DURATION}`);
+  return response;
 }
 
-
 export async function POST(request: Request) {
-  // Define the expected structure of the request data
-  interface TaskData {
-    task: string;
-    date: string;
-  }
-
   const { userId } = auth();
 
   if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  // Explicitly type the result of request.json() to avoid the 'any' type
-  const { task, date }: TaskData = await request.json() as TaskData;
+  // Parse and validate JSON only once
+  let taskData: TaskData;
+  try {
+    taskData = await request.json() as TaskData;
+  } catch  {
+    return new NextResponse("Invalid JSON", { status: 400 });
+  }
+
+  // Check if task and date are provided
+  if (!taskData.task || !taskData.date) {
+    return new NextResponse("Missing task or date", { status: 400 });
+  }
 
   // Insert the new task into the database
-  const todo = await db.insert(tasks).values({
-    userId: userId,
-    task: task,  
-    date: date,  
-  });
+  const [todo] = await db
+    .insert(tasks)
+    .values({
+      userId,
+      task: taskData.task,
+      date: taskData.date,
+    })
+    .returning({ task: tasks.task, date: tasks.date }); // Return only necessary fields
 
-  // Return the created todo item as a response
   return NextResponse.json(todo);
 }

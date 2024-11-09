@@ -17,7 +17,7 @@ const Navbar = () => {
         <ul className="inline-flex flex-row items-center mx-auto bg-[#1f1f1f] py-2.5 px-3 rounded-full border text-[#646464] text-[1.2rem] font-medium">
           <li className="px-2">
             <Link href="/ai" target="_blank">
-              <Image src="/men.png" alt="logo" width={100} height={50} />
+              <Image src="https://utfs.io/f/orc4evzyNtrg2K2riNsBQGN8KriC9uPWHlnIoFkxOYgeDpE7" alt="logo" width={100} height={50} />
             </Link>
           </li>
 

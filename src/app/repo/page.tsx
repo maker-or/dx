@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Greeting from "~/components/ui/Greeting";
 import Navbar from "~/components/ui/Navbar";
-import { ChevronLeft } from "lucide-react";
+import { StepBack } from "lucide-react";
+
 
 // Define the type for branches and structure for subjects, chapters, and notes.
 const branches = [
@@ -321,8 +322,8 @@ const Page = () => {
               onClick={() => setSelectedSubject(null)}
               className="mb-4 flex rounded py-2 text-sm text-[#f7eee3] hover:text-[#434080] lg:text-lg"
             >
-              <ChevronLeft />
-              Back to Subjects
+              <StepBack />
+              
             </button>
             {/* Type Selection */}
             <div className="mb-4 flex gap-4">
@@ -363,7 +364,7 @@ const Page = () => {
                 href={`https://cloud.link/to/${selectedBranch}/${selectedSubject}/qp1`}
                 target="_blank"
               >
-                <div className="flex h-[100px] w-[200px] items-center justify-center rounded-lg bg-[#434080] p-2 text-center text-white">
+                <div className="flex h-[100px] w-[200px] items-center justify-center rounded-lg bg-[#434080] p-2 text-center text-white ">
                   Question Paper 1
                 </div>
               </Link>

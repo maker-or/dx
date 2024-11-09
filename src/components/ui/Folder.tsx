@@ -12,7 +12,7 @@ const Folder = ({ folderName }: { folderName: string }) => {
       <button className="folder">
         <div className="folder-top p-1 text-md font-medium ">{folderName}</div>
         <div className="folder-body p-1">
-          <Image src="/bg-1.png" alt="folder-img" width={200} height={200} />
+          <Image src="https://utfs.io/f/orc4evzyNtrgcRB1p3PMZXyJ0fisTCozw2r135cv9768txUW" alt="folder-img" width={200} height={200} />
         </div>
       </button>
     </Link>

@@ -11,21 +11,27 @@ interface TaskData {
 }
 
 export async function PATCH(request: Request) {
-  const { userId } = auth();
+  // Authenticate user concurrently with JSON parsing
+  const [userAuth, { id, task, date }] = await Promise.all([
+    auth(),
+    request.json() as Promise<TaskData>
+  ]);
 
+  const { userId } = userAuth;
   if (!userId) {
     return new NextResponse("Unauthorized", { status: 401 });
   }
 
-  // Assert the expected structure of the request body
-  const { id, task, date }: TaskData = await request.json() as TaskData;
+  try {
+    // Ensure 'tasks.taskId' is indexed for faster lookup
+    const updatedTask = await db
+      .update(tasks)
+      .set({ task, date })
+      .where(eq(tasks.taskId, parseInt(id, 10)))
+      .returning();
 
-  // Update the task in the database
-  const updatedTask = await db
-    .update(tasks)
-    .set({ task, date })
-    .where(eq(tasks.taskId, parseInt(id, 10)))
-    .returning();
-
-  return NextResponse.json(updatedTask);
+    return NextResponse.json(updatedTask);
+  } catch  {
+    return new NextResponse("Failed to update task", { status: 500 });
+  }
 }
