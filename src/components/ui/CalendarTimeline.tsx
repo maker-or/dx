@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 
 type Event = {
-  id: number;  // Add an ID to identify tasks
+  id: number;
   date: number;
   text: string;
 };
 
 export default function CalendarTimeline() {
-  const currentDate = new Date();
+  const currentDate = useMemo(() => new Date(), []);
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
@@ -18,6 +18,8 @@ export default function CalendarTimeline() {
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [editText, setEditText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+  const activeDateRef = useRef<HTMLButtonElement | null>(null);
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -41,13 +43,13 @@ export default function CalendarTimeline() {
         throw new Error('Failed to fetch tasks');
       }
       const data = await response.json() as { taskId: number; task: string; date: string }[];
-      
+
       const formattedEvents: Event[] = data.map((task) => ({
         id: task.taskId,
-        date: parseInt(task.date, 10), // Convert string date to number
+        date: parseInt(task.date, 10),
         text: task.task,
       }));
-    
+
       setEvents(formattedEvents);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -77,22 +79,22 @@ export default function CalendarTimeline() {
     if (editingEvent) {
       const data = {
         task: editText,
-        date: selectedDate.toString(), // Convert to string to match API expectation
+        date: selectedDate.toString(),
       };
-  
+
       const method = editingEvent.id ? "PATCH" : "POST";
       const url = editingEvent.id ? `/api/task/${editingEvent.id}` : "/api/task";
-  
+
       const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-  
+
       if (!response.ok) {
         console.error('Failed to save task:', response.statusText);
       } else {
-        await fetchTasks(); // Refetch tasks to update the state
+        await fetchTasks();
       }
       setEditingEvent(null);
     }
@@ -101,6 +103,18 @@ export default function CalendarTimeline() {
   useEffect(() => {
     fetchTasks().catch(error => console.error('Failed to fetch tasks:', error));
   }, []);
+
+  useEffect(() => {
+    // Scroll to the active date button on load
+    if (activeDateRef.current && datePickerRef.current) {
+      const datePicker = datePickerRef.current;
+      const activeDateButton = activeDateRef.current;
+      datePicker.scrollTo({
+        left: activeDateButton.offsetLeft - datePicker.offsetWidth / 2 + activeDateButton.offsetWidth / 2,
+        behavior: 'smooth'
+      });
+    }
+  }, [selectedDate, daysInMonth]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -124,14 +138,14 @@ export default function CalendarTimeline() {
   const filteredEvents = events.filter((event) => event.date === selectedDate);
 
   return (
-    <div className="bg-neutral-900 text-[#f7eee3] p-6 rounded-lg w-full mx-auto ">
+    <div className="bg-[#121212] border-[#f7eee323] border-2 text-[#f7eee3] p-6 rounded-lg w-full mx-auto ">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{monthNames[currentMonth]}</h1>
         <div className="flex items-center space-x-2">
           <Button
             onClick={handleNewEvent}
             variant="default"
-            className="border-2 border-[#f7eee3] hover:bg-orange-600 hover:border-none "
+            className="border-2 border-[#f7eee323] hover:bg-orange-600 hover:border-none "
           >
             New <Plus className="ml-1 h-4 w-4" />
           </Button>
@@ -139,16 +153,17 @@ export default function CalendarTimeline() {
       </div>
 
       {/* Date Picker */}
-      <div className="flex space-x-4 mb-4 overflow-x-auto no-scrollbar pb-2 border-b border-neutral-800 h-auto">
+      <div ref={datePickerRef} className="flex space-x-4 mb-4 overflow-x-auto no-scrollbar pb-2 border-b border-neutral-800 h-auto">
         {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((date) => (
           <button
             key={date}
             onClick={() => handleDateClick(date)}
             className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg font-bold ${
               selectedDate === date
-                ? ' text-[#f7eee3] border-2 bg-[#0c0c0c] border-[#f7eee3]'
+                ? ' text-[#f7eee3] border-2 bg-neutral-800 border-[#f7eee323]'
                 : 'text-gray-400 hover:bg-neutral-800'
             }`}
+            ref={selectedDate === date ? activeDateRef : null}
           >
             {date}
           </button>
@@ -160,7 +175,7 @@ export default function CalendarTimeline() {
         {filteredEvents.map((event, index) => (
           <div
             key={event.id || index}
-            className="absolute h-8 bg-neutral-800 rounded-md flex items-center justify-center p-2  text-white"
+            className="absolute h-8 bg-neutral-800 rounded-md flex items-center justify-center p-2  text-[#f7eee3]"
             style={{
               left: '0',
               right: '0',

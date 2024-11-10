@@ -88,7 +88,7 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ images }) => {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-6 w-full h-[250px]">
+      <div className="flex flex-wrap gap-6 item-center justify-center w-full h-[250px]">
         {images?.map((image, index) => (
           <div
             key={image.id + '-' + index}
@@ -109,7 +109,7 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ images }) => {
       {/* PDF Viewer Modal */}
       {selectedPdfUrl && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 ">
-          <div className="relative bg-white rounded-lg p-4  w-full ">
+          <div className="relative bg-white rounded-lg p-4 items-center justify-center w-full ">
             <button
               onClick={() => setSelectedPdfUrl(null)}
               className="absolute top-2 right-2 px-3 py-1 bg-orange-600 text-white rounded-lg"

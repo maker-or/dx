@@ -27,18 +27,26 @@ type SubjectsByBranch = Record<Branch, Subject>;
 const subjects: SubjectsByBranch = {
   CSE: {
     "Artificial Intelligence": {
-      Notes:
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI-All%20Units.pdf?alt=media&token=c57ad992-412f-436e-8d66-35a7abc83cf5",
+      Notes:"https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI-All%20Units.pdf?alt=media&token=c57ad992-412f-436e-8d66-35a7abc83cf5",
+      chapter1:'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20I%20R20.pdf?alt=media&token=0fc404c5-bcf6-47d4-a9c1-4bbb30133999',
+      'chapter2':'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20II.pdf?alt=media&token=a0182391-b3df-48d0-939d-db6a821509e4',
+      "Chapter 3":
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20III.pdf?alt=media&token=b454a389-fd14-4f44-9387-b9acb922e7cf",
+      "Chapter 4":
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20IV.pdf?alt=media&token=830425f0-386c-4580-8084-9a2e3b711ef4",
+      "Chapter 5":
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20V%20GRD.pdf?alt=media&token=a07c3c1a-5e3b-48af-8286-d9c5e2b23566",
+
     },
     "Computer Networks": {
       "Chapter 1":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FCN%2FCN%20UNIT%201.pdf?alt=media&token=8a3ffd90-ccde-4439-b8a6-e22862c9e9df",
       "Chapter 2":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FCN%2FCN%20UNIT%202.pdf?alt=media&token=172a3a1d-70d8-4036-a585-f54950674e6e",
       "Chapter 3":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FCN%2FCN%20UNIT%203.pdf?alt=media&token=e0f2543e-36fb-4835-a3b0-5c414a4c5b87",
       "Chapter 4":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
+        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FCN%2FCN%20UNIT%204.pdf?alt=media&token=806e04ca-eda9-428e-8235-c95c5ebc3544",
       "Chapter 5":
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
     },
@@ -59,16 +67,12 @@ const subjects: SubjectsByBranch = {
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FDWM%2FVipin%20Kumar_Text%20Book.pdf?alt=media&token=35e87e92-5351-4b64-aa8c-7e8d197e90b8",
     },
     FED: {
-      "Chapter 1":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
-      "Chapter 2":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
-      "Chapter 3":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
-      "Chapter 4":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
-      "Chapter 5":
-        "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
+      "HTML":
+        "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "React":
+        "https://react.dev/learn",
+      "MongoDB":
+        "https://www.mongodb.com/docs/manual/",
     },
     FLAT: {
       Textbook:
@@ -329,7 +333,7 @@ const Page = () => {
             <div className="mb-4 flex gap-4">
               <button
                 onClick={() => setSelectedType("notes")}
-                className={`rounded-md px-1 text-sm py-2 lg:px-4 ${selectedType === "notes" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
+                className={`rounded-md px-3 text-sm py-2 lg:px-4 ${selectedType === "notes" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
               >
                 Notes
               </button>
