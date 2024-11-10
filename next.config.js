@@ -8,7 +8,9 @@ await import("./src/env.js");
 const config = {
     images: {
         remotePatterns: [{ hostname: "utfs.io" }],
+        domains: ["img.freepik.com", "veterinaire-tour-hassan.com"],
       },
+      
       async rewrites() {
         return [
           {

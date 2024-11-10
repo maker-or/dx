@@ -11,8 +11,7 @@ interface TaskData {
 }
 
 // Cache user tasks for a short duration (optional)
-const TASK_CACHE_DURATION = 60 * 5; // Cache for 5 minutes
-
+const TASK_CACHE_DURATION = 60 * 50; //
 export async function GET() {
   const { userId } = auth();
 
