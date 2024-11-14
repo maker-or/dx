@@ -9,11 +9,13 @@ interface PdfViewerProps {
 const PdfViewer: React.FC<PdfViewerProps> = ({ url }) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   return (
-    <div className="h-[100svh] w-[100svw]">
+    <div className="h-[100svh] w-[90svw] p-4 pt-8 flex items-center justify-center">
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
         <Viewer
           fileUrl={url}
           plugins={[defaultLayoutPluginInstance]}
+          
+
         />
       </Worker>
     </div>

@@ -108,11 +108,11 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ images }) => {
 
       {/* PDF Viewer Modal */}
       {selectedPdfUrl && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 ">
-          <div className="relative bg-white rounded-lg p-4 items-center justify-center w-full ">
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center  p-4 z-50 ">
+          <div className="relative bg-white rounded-lg p-4  items-center justify-center w-full ">
             <button
               onClick={() => setSelectedPdfUrl(null)}
-              className="absolute top-2 right-2 px-3 py-1 bg-orange-600 text-white rounded-lg"
+              className="absolute top-8 right-2 px-3 py-1 bg-orange-600 text-[#f7eee3] rounded-lg"
             >
               Close
             </button>

@@ -119,11 +119,14 @@ export async function POST(req: Request): Promise<Response> {
 
     // Prepare the prompt string with correct context formatting
     const final_prompt = `Context: ${context}\n\nQuestion: ${query}\n\nPlease provide a detailed answer based on the context provided.`;
+    
+    console.log(context)
+    console.log(query)
     console.log(final_prompt)
 
     const result = await streamText({
       model: model,
-      system: 'you will get the context ',
+      system: 'Your job is to genrate the answers to the biven question',
       prompt: final_prompt,
 
     });

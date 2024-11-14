@@ -17,7 +17,11 @@
   "dependencies": {
     "@ai-sdk/google": "^0.0.55",
     "@ai-sdk/openai": "^0.0.70",
+    "@blocknote/core": "^0.19.0",
+    "@blocknote/mantine": "^0.19.0",
+    "@blocknote/react": "^0.19.0",
     "@clerk/nextjs": "^5.6.0",
+    "@excalidraw/excalidraw": "^0.17.6",
     "@google/generative-ai": "^0.1.3",
     "@langchain/core": "^0.3.17",
     "@langchain/google-genai": "^0.1.3",

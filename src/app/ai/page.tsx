@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { type Message, useChat } from 'ai/react';
-import { Sparkles, User, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import '~/styles/globals.css';
 
 interface ChatHelpers {
@@ -56,20 +56,14 @@ export default function Page() {
             >
               {m.role === 'user' ? (
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-orange-500">
-                    <User size={18} />
-                  </div>
-                  <div className="max-w-xs bg-orange-200 text-black rounded-xl p-4">
-                    <p className="whitespace-pre-wrap">{m.content}</p>
+                  <div className="max-w-xl  text-[3rem] text-[#f7eee3] rounded-xl p-4">
+                    <h1 className="whitespace-pre-wrap">{m.content}</h1>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-start gap-4 font-mono">
-                  <div className="max-w-screen-lg text-[#f7eee3] rounded-xl p-4">
+                <div className="flex items-start gap-2">
+                  <div className="max-w-screen-lg text-[#f7eee3] text-[1.4rem] rounded-xl p-4">
                     <p className="whitespace-pre-wrap">{m.content}</p>
-                  </div>
-                  <div className="w-8 h-8 p-2 rounded-full flex items-center justify-center bg-orange-500">
-                    <Sparkles size={24} />
                   </div>
                 </div>
               )}
