@@ -13,7 +13,7 @@ import { FolderProvider } from "../components/ui/FolderContext";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
-import Cmd from "~/components/ui/Cmd";
+
 import { Instrument_Serif,  } from 'next/font/google'
 import { Analytics } from "@vercel/analytics/react"
 const Inst = Instrument_Serif({
@@ -24,6 +24,7 @@ const Inst = Instrument_Serif({
 
 })
 import { CSPostHogProvider } from '~/app/_analytics/providers'
+import CommandPlate from "~/components/ui/CommandPlate";
 
 
 
@@ -56,7 +57,8 @@ export default function RootLayout({
           <div className="p-6 m-1">
            {/* <Greeting/>
           <Navbar/>  */}
-          <Cmd/>
+          <CommandPlate/>
+          {/* <Cmd/> */}
           <FolderProvider>  
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)}/>
           {children}
