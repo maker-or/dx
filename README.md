@@ -18,6 +18,8 @@
 Sphere aims to redefine academic productivity by blending resource management, collaboration, and AI capabilities into a single platform.
 
 ##📩 Contact
+
+
 For support,suggestion reach out to us at:
 
 - Email: harshith10295032@gmail.com
