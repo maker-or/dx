@@ -1,60 +1,9 @@
-// import { createGoogleGenerativeAI } from '@ai-sdk/google';
-// import { convertToCoreMessages, streamText  } from "ai";
-// import { type NextRequest } from 'next/server';
-
-
-// export const maxDuration = 60;
-
-// interface ConvertibleMessage {
-//   role: 'user' | 'assistant';
-//   content: string;
-//   id?: string;
-// }
-
-
-
-// // const pinecone = new Pinecone({
-// //     apiKey: process.env.PINECONE_API_KEY ?? "",
-// // });
-
-// const google = createGoogleGenerativeAI({
-//     baseURL: 'https://generativelanguage.googleapis.com/v1beta',
-//     apiKey: process.env.GEMINI_API_KEY
-// });
-
-
-// const model = google('models/gemini-1.5-pro-latest', {
-//     safetySettings: [
-//         { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-//     ],
-// });
-
-
-
-
-// export async function POST(req: NextRequest) {
-
-//   const body = await req.json() as { messages: ConvertibleMessage[] };
-
-    
-//     const result = await streamText({
-//         model: model,
-//         system: 'You are SPHEREAI,search the knowledge base and answer the question if you cannot find the answer in the knowledge base then search the internet and answer the question.',
-//         messages: convertToCoreMessages(body.messages),
-
-//     });
-
-//     return result.toDataStreamResponse();
-// }
-
-
-// import { type NextRequest } from 'next/server';
-// import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { getEmbedding } from '~/utils/embeddings';
 import { type ConvertibleMessage } from '~/utils/types';
 import { streamText } from "ai";
 import { Pinecone } from '@pinecone-database/pinecone';
+import { runGeneratedSQLQuery, generateQuery, explainQuery } from '~/app/api/chat/action';
 
 // Define a type for the expected request body structure
 interface RequestBody {
@@ -64,7 +13,7 @@ interface RequestBody {
 export async function POST(req: Request): Promise<Response> {
   try {
     console.log("welcome to ai");
-    
+
     // Parse the request JSON with explicit typing
     const body = await req.json() as RequestBody;
 
@@ -117,16 +66,30 @@ export async function POST(req: Request): Promise<Response> {
       ],
     });
 
-    // Prepare the prompt string with correct context formatting
-    const final_prompt = `Context: ${context}\n\nQuestion: ${query}\n\nPlease provide a detailed answer based on the context provided.`;
-    
+    // Generate SQL query
+    const generatedSQL = await generateQuery(query);
+    console.log(generatedSQL)
+    const sqlResults = await runGeneratedSQLQuery(generatedSQL);
+    const sqlExplanation = await explainQuery(query, generatedSQL);
+
+    const final_prompt = `
+    Context: ${context}
+
+    User Query: ${query}
+    Generated SQL Query: ${generatedSQL}
+    SQL Results: ${JSON.stringify(sqlResults)}
+    Explanation of SQL Query: ${JSON.stringify(sqlExplanation)}
+
+    Please provide a comprehensive and detailed answer to the user's query.
+    `;
+
     console.log(context)
     console.log(query)
     console.log(final_prompt)
 
     const result = await streamText({
       model: model,
-      system: 'Your job is to genrate the answers to the biven question',
+      system: 'Your job is to genrate the answers to the given question make the answer is clean clear in a strucured format',
       prompt: final_prompt,
 
     });
@@ -137,7 +100,7 @@ export async function POST(req: Request): Promise<Response> {
     console.error('Error in chat route:', error);
     return new Response(
       JSON.stringify({ error: 'An error occurred while processing your request' }),
-      { 
+      {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       }

@@ -140,12 +140,12 @@ export default function CalendarTimeline() {
   return (
     <div className="bg-[#121212] border-[#f7eee323] border-2 text-[#f7eee3] p-6 rounded-lg w-full mx-auto ">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">{monthNames[currentMonth]}</h1>
+        <h1 className="text-3xl font-serif">{monthNames[currentMonth]}</h1>
         <div className="flex items-center space-x-2">
           <Button
             onClick={handleNewEvent}
             variant="default"
-            className="border-2 border-[#f7eee323] hover:bg-orange-600 hover:border-none "
+            className="border-2 border-[#f7eee323] font-serif hover:bg-orange-600 hover:border-none "
           >
             New <Plus className="ml-1 h-4 w-4" />
           </Button>
@@ -158,7 +158,7 @@ export default function CalendarTimeline() {
           <button
             key={date}
             onClick={() => handleDateClick(date)}
-            className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg font-bold ${
+            className={`w-10 h-10 flex-shrink-0 flex items-center justify-center font-serif rounded-lg font-bold ${
               selectedDate === date
                 ? ' text-[#f7eee3] border-2 bg-neutral-800 border-[#f7eee323]'
                 : 'text-gray-400 hover:bg-neutral-800'
@@ -187,7 +187,7 @@ export default function CalendarTimeline() {
               <input
                 ref={inputRef}
                 type="text"
-                className="bg-neutral-800 text-white p-1 w-full  "
+                className="bg-neutral-800 text-white p-1 tracking-tight w-full  "
                 value={editText}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}

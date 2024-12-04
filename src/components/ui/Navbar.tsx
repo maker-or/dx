@@ -12,7 +12,7 @@ const Navbar = () => {
   const isActive = (path: string) => pathName === path;
 
   return (
-    <nav className="py-5">
+    <nav className="py-5 font-serif">
       <div className="items-center flex">
         <ul className="inline-flex flex-row items-center mx-auto bg-[#1f1f1f] py-2.5 px-3 rounded-full border text-[#646464] text-[1.2rem] font-medium">
           <li className="px-2">

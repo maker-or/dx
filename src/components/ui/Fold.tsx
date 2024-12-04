@@ -56,14 +56,14 @@ const Fold = () => {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div className='font-serif'>Loading...</div>;
     }
 
     return (
         <div className="flex flex-col items-left justify-left w-full gap-4">
             <Group />
             <div id="addNew" className="flex justify-between items-center w-full">
-                <h2 className="font-semibold text-xl text-white">Notebooks</h2>
+                <h2 className="font-serif text-xl text-white">Notebooks</h2>
                 <button
                     className="px-3 py-1 rounded-lg bg-orange-600 text-white text-md"
                     onClick={addFolder}
@@ -71,7 +71,7 @@ const Fold = () => {
                     +
                 </button>
             </div>
-            <div className="flex w-full overflow-x-auto">
+            <div className="flex w-full overflow-x-auto font-serif">
                 {folders.map((folder) => (
                     <Folder 
                         key={folder.id} 

@@ -40,8 +40,8 @@ export default function Page() {
     <div className="absolute inset-0 -z-10 h-full w-full flex flex-col items-center px-5 py-12 bg-gradient-to-b from-[#180B03] to-[#000]">
       {!submitted && (
         <div className="flex flex-col items-center gap-4 mb-8">
-          <h1 className="text-5xl md:text-6xl text-white animate-fade-in">
-            Ask Anything
+          <h1 className="text-5xl md:text-6xl font-serif text-white animate-fade-in">
+            Ask Anything 
           </h1>
         </div>
       )}
@@ -55,14 +55,14 @@ export default function Page() {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {m.role === 'user' ? (
-                <div className="flex items-start gap-4">
-                  <div className="max-w-xl  text-[3rem] text-[#f7eee3] rounded-xl p-4">
+                <div className="flex items-start gap-4 font-serif">
+                  <div className="max-w-xl  text-[3rem] text-[#215783] rounded-xl p-4">
                     <h1 className="whitespace-pre-wrap">{m.content}</h1>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-start gap-2">
-                  <div className="max-w-screen-lg text-[#f7eee3] text-[1.4rem] rounded-xl p-4">
+                  <div className="max-w-screen-lg tracking-tight text-[#37ff33] text-[1.4rem] rounded-xl p-4">
                     <p className="whitespace-pre-wrap">{m.content}</p>
                   </div>
                 </div>
@@ -79,7 +79,7 @@ export default function Page() {
               placeholder="Ask me anything..."
               value={input}
               onChange={handleInputChange}
-              className="w-full pl-8 pr-16 py-4 bg-[#0c0c0c] text-white rounded-full placeholder-gray-400 outline-none focus:ring-2 focus:ring-orange-500/40 transition-all"
+              className="w-full pl-8 pr-16 py-4 bg-[#0c0c0c] text-white rounded-full font-serif placeholder-gray-400 outline-none focus:ring-2 focus:ring-orange-400/10 transition-all"
             />
             <button
               type="submit"

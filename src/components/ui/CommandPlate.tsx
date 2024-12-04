@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react';
-import { Plus, Check, ChevronLeft,Search,Pause,Play,RotateCw } from 'lucide-react';
+import { Plus, Check, ChevronLeft, Search, Pause, Play, RotateCw } from 'lucide-react';
+import { useChat } from 'ai/react';
 
 const TaskComponent = ({ onClose }: { onClose: () => void }) => {
   const [tasks, setTasks] = useState<
@@ -76,22 +77,20 @@ const TaskComponent = ({ onClose }: { onClose: () => void }) => {
         {tasks.map((task) => (
           <div
             key={task.id}
-            className={`flex items-center justify-between p-3 transition-all duration-500 ${
-              removingTask === task.id
+            className={`flex items-center justify-between p-3 transition-all duration-500 ${removingTask === task.id
                 ? "opacity-0 scale-90" // Fading out and shrinking animation
                 : task.completed
-                ? "line-through border-b-2 border-[#f7eee323] text-green-600"
-                : "bg-[#0c0c0c]/0 border-b-2 border-[#f7eee323]"
-            }`}
+                  ? "line-through border-b-2 border-[#f7eee323] text-green-600"
+                  : "bg-[#0c0c0c]/0 border-b-2 border-[#f7eee323]"
+              }`}
           >
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => handleToggleComplete(task.id)}
-                className={`w-6 h-6 rounded-md border flex items-center justify-center ${
-                  task.completed
+                className={`w-6 h-6 rounded-md border flex items-center justify-center ${task.completed
                     ? "bg-green-500/70 border-green-500/70"
                     : "border-[#f7eee3]/30 hover:border-orange-400/50"
-                }`}
+                  }`}
               >
                 {task.completed && <Check size={16} />}
               </button>
@@ -142,7 +141,7 @@ const TaskComponent = ({ onClose }: { onClose: () => void }) => {
 
 
 const PomodoroComponent = ({ onClose }: { onClose: () => void }) => {
-  const [timeLeft, setTimeLeft] = useState<number>(25 * 60); 
+  const [timeLeft, setTimeLeft] = useState<number>(25 * 60);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [completedSessions, setCompletedSessions] = useState<number>(0);
 
@@ -182,7 +181,7 @@ const PomodoroComponent = ({ onClose }: { onClose: () => void }) => {
         >
           <ChevronLeft size={24} />
         </button>
-        
+
       </div>
 
       <div className="flex flex-col items-center space-y-4">
@@ -208,13 +207,107 @@ const PomodoroComponent = ({ onClose }: { onClose: () => void }) => {
 };
 
 
+const ChatComponent = ({ onClose }: { onClose: () => void }) => {
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit: aiHandleSubmit,
+  } = useChat({
+    initialMessages: [],
+  });
 
+  // const [submitted, setSubmitted] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Focus input on component mount
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!input.trim()) return;
+    // setSubmitted(true);
+
+    try {
+      aiHandleSubmit(event);
+    } catch (error) {
+      console.error('Error while submitting the message:', error);
+    }
+  };
+
+  return (
+    <div className="bg-[#0c0c0c]/60 backdrop-blur-2xl text-[#f7eee3] rounded-3xl p-6 w-1/2 max-h-[600px] flex flex-col shadow-2xl border font-sans border-[#f7eee3]/20 relative overflow-hidden">
+      {/* Glassmorphic background effect */}
+
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c0c]/10 to-[#0c0c0c]/5 opacity-50 -z-10 blur-3xl"></div>
+
+      <div className="flex gap-3 items-center mb-6">
+        <button
+          onClick={onClose}
+          className="text-[#f7eee3]/70 hover:text-[#f7eee3] transition-colors bg-[#f7eee3]/10 rounded-full p-2"
+        >
+          <ChevronLeft size={24} />
+        </button>
+
+
+        <form onSubmit={onSubmit} className="mt-4 w-full flex gap-2">
+          <div className="relative mb-6 flex gap-2 w-full text-[#0c0c0c]">
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f7eee3] p-2 bg-[#0c0c0c] z-10 rounded-sm"
+              size={38}
+            />
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+
+              placeholder="Search Anything..."
+              className="w-full pl-16 p-4 bg-gradient-to-r from-[#f7eee3] to-[#ABABAB] backdrop-blur-md text-[#0c0c0c] rounded-xl font-sans border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#0c0c0c]"
+            />
+          </div>
+        </form>
+
+      </div>
+
+      {/* Messages Container */}
+      <div className="flex-grow overflow-y-auto   space-y-4 mb-4 pr-2">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`px-3 rounded-lg max-w-[90%} ${message.role === 'user'
+                ? ' text-[#f7eee3]/60 font-serif text-[1.8rem]'
+                : ' text-[#f7eee3] text-[1.2rem] tracking-tight'
+              }`} 
+          >
+            {message.content}
+          </div>
+        ))}
+        <div ref={messagesEndRef} /> {/* Anchor for auto-scrolling */}
+      </div>
+
+      {/* Input Area */}
+
+    </div>
+  );
+};
 
 const CommandPlate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [activeView, setActiveView] = useState<'commands' | 'task' | 'timer'>('commands');
+  const [activeView, setActiveView] = useState<'commands' | 'task' | 'timer' | 'Sphere Intelligence'>('commands');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const commands = [
@@ -268,6 +361,8 @@ const CommandPlate = () => {
       setActiveView('task');
     } else if (selectedCommand?.name === 'Timer') {
       setActiveView('timer');
+    } else if (selectedCommand?.name === 'Sphere Intelligence') {
+      setActiveView('Sphere Intelligence');
     } else {
       setActiveView('commands');
     }
@@ -293,31 +388,41 @@ const CommandPlate = () => {
         />
       );
     }
-
+    else if (activeView === 'Sphere Intelligence') {
+      return (
+        <ChatComponent
+          onClose={() => {
+            setActiveView('commands');
+            setSearchQuery('');
+          }}
+        />
+      );
+    }
+    //bg-gradient-to-tl from-[#0c0c0c] via-[#080300ac] to-[#0c0500fa]
     return (
-      <div className="bg-[#0c0c0c]/60 backdrop-blur-2xl text-[#f7eee3] rounded-3xl p-6 w-1/2 max-h-[1000px] shadow-2xl border border-[#f7eee3]/20 relative overflow-hidden ">
+      <div className="bg-[#0c0c0c]/60 backdrop-blur-2xl text-[#f7eee3] rounded-3xl p-6 w-1/2  shadow-2xl border border-[#f7eee338] relative overflow-hidden ">
         {/* Glassmorphic background effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0c0c0c]/30 via-[#0c0c0c81] to-[#ff5e0094] opacity-80 -z-10 blur-2xl"></div>
-        
+        <div className="absolute inset-0 bg-[#0c0c0c] opacity-50 backdrop-blur-2xl -z-10 blur-2xl"></div>
+
         <div className="relative mb-6 flex gap-2 text-[#0c0c0c]">
-  <Search
-    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f7eee3] p-2 bg-[#0c0c0c] z-10 rounded-sm"
-    size={38}
-  />
-  <input
-    ref={searchInputRef}
-    type="text"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-    onKeyDown={(e) => {
-      if (e.key === "ArrowDown") handleArrowNavigation("down");
-      if (e.key === "ArrowUp") handleArrowNavigation("up");
-      if (e.key === "Enter") handleCommandSelection();
-    }}
-    placeholder="Search Anything..."
-    className="w-full pl-16 p-4 bg-gradient-to-r from-[#f7eee3] to-[#ABABAB] backdrop-blur-md text-[#0c0c0c] rounded-xl border border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#0c0c0c]"
-  />
-</div>
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f7eee3] p-2 bg-[#0c0c0c] z-10 rounded-sm"
+            size={38}
+          />
+          <input
+            ref={searchInputRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") handleArrowNavigation("down");
+              if (e.key === "ArrowUp") handleArrowNavigation("up");
+              if (e.key === "Enter") handleCommandSelection();
+            }}
+            placeholder="Search Anything..."
+            className="w-full pl-16 p-4 bg-gradient-to-r from-[#f7eee3] to-[#ABABAB] backdrop-blur-md text-[#0c0c0c] rounded-xl border border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#0c0c0c]"
+          />
+        </div>
 
 
         <ul className="max-h-60 overflow-y-autospace-y-2">
@@ -329,15 +434,15 @@ const CommandPlate = () => {
                 key={command.name}
                 className={`
                   p-3  cursor-pointer transition-all duration-200
-                  ${index === selectedIndex 
-                    ? ' border-b-2 border-[#f7eee323]' 
+                  ${index === selectedIndex
+                    ? ' border-b-2 border-[#f7eee323] text-orange-500 rounded-sm'
                     : 'hover:bg-[#f7eee3]/10 border-b-2 border-[#f7eee323]'}
                 `}
                 onClick={handleCommandSelection}
               >
                 <div className="flex justify-between items-center">
                   <span>{command.name}</span>
-                  <span className="text-[#f7eee3]/80 text-sm">{command.shortcut}</span>
+                  {/* <span className="text-[#f7eee3]/80 text-sm">{command.shortcut}</span> */}
                 </div>
               </li>
             ))
