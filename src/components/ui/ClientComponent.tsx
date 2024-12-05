@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useFolder } from '../../components/ui/FolderContext';
 import { UploadButton } from '../../utils/uploadthing';
 import PdfViewer from './PDFViewer';
+import { X } from 'lucide-react';
 
 interface ClientComponentProps {
   images: { id: number; url: string; name: string }[];
@@ -108,15 +109,15 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ images }) => {
 
       {/* PDF Viewer Modal */}
       {selectedPdfUrl && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center  p-4 z-50 ">
-          <div className="relative bg-white rounded-lg p-4  items-center justify-center w-full ">
+        <div className="fixed inset-0  flex items-center justify-center  p-4 ">
+          <div className="relative bg-[#0c0c0c] rounded-lg p-4  items-center justify-center w-full ">
             <button
               onClick={() => setSelectedPdfUrl(null)}
-              className="absolute top-8 right-2 px-3 py-1 bg-orange-600 text-[#f7eee3] rounded-lg"
+              className="absolute top-0 right-1 z-10  rounded-full p-3 bg-[#f7eee3] text-[#ff5e00] "
             >
-              Close
+              <X />
             </button>
-            <PdfViewer url={selectedPdfUrl} />
+            <PdfViewer fileUrl={selectedPdfUrl} />
           </div>
         </div>
       )}
