@@ -24,7 +24,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
   return (
     <div className="relative flex flex-col items-center justify-center h-[90svh] w-full p-2 bg-[#0c0c0c7e] border border-gray-300 rounded-lg">
       {/* Floating Toolbar */}
-      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-lg border border-gray-300 bg-[#0c0c0c]/80 backdrop-blur-lg p-2 shadow-lg">
+      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-lg border border-gray-300 bg-[#0c0c0c] backdrop-blur-lg p-2 shadow-lg">
         <Toolbar>
           {(props: ToolbarSlot) => {
             const { CurrentPageInput, NumberOfPages, Print, ZoomIn, ZoomOut } = props;
@@ -34,7 +34,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                 {/* Replace default icons with Lucide icons */}
                 <button
                   className="p-2 hover:bg-gray-200 rounded"
-                  onClick={() => <ZoomOut />}
+                  onClick={() => ZoomOut({})}
                   aria-label="Zoom out"
                   title="Zoom out"
                 >
@@ -42,7 +42,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                 </button>
                 <button
                   className="p-2 hover:bg-gray-200 rounded"
-                  onClick={() => <ZoomIn />}  
+                  onClick={() => ZoomIn({})}
                   aria-label="Zoom in"
                   title="Zoom in"
                 >
@@ -55,7 +55,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
                 </div>
                 <button
                   className="p-2 hover:bg-gray-200 rounded"
-                  onClick={() => <Print />}
+                  onClick={() => Print({})}
                   aria-label="Print"
                   title="Print"
                 >
