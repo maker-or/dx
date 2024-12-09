@@ -3,7 +3,10 @@ import { getEmbedding } from '~/utils/embeddings';
 import { type ConvertibleMessage } from '~/utils/types';
 import { streamText } from "ai";
 import { Pinecone } from '@pinecone-database/pinecone';
-import { runGeneratedSQLQuery, generateQuery, explainQuery } from '~/app/api/chat/action';
+
+// import { Ollama } from "@langchain/ollama";
+// import {fetchYouTubeVideos} from'~/app/api/chat/youtube'
+// import { runGeneratedSQLQuery, generateQuery, explainQuery } from '~/app/api/chat/action';
 
 // Define a type for the expected request body structure
 interface RequestBody {
@@ -29,75 +32,91 @@ export async function POST(req: Request): Promise<Response> {
     const query = lastMessage.content;
     console.log(query);
 
+    //  const video:unknown = await fetchYouTubeVideos(query);
+    //   console.log(video)
+
+
+
+
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY ?? "",
+
+
     });
 
     // Get embeddings for the query
     const queryEmbedding = await getEmbedding(query);
-    console.log(queryEmbedding);
+    console.log("in route ", queryEmbedding);
 
     // Query Pinecone
-    const index = pinecone.index('k');
-    const queryResponse = await index.query({
+    const index = pinecone.index('books');
+    const queryResponse = await index.namespace('').query({
       vector: queryEmbedding,
       topK: 5,
       includeMetadata: true,
+      //  includeValues:true
     });
 
-    console.log(queryResponse);
 
-    // Safely filter and map matches with metadata
+    console.log("Pinecone Query Response:", JSON.stringify(queryResponse, null, 2));
+    console.log("*******************")
+
+
     const context = queryResponse.matches
-      .filter((match) => match.metadata && typeof match.metadata.content === 'string')
-      .map((match) => match.metadata!.content as string)
+      .map((match) => `Book: ${String(match.metadata?.book ?? 'Unknown')}\nPage: ${String(match.metadata?.page_number ?? 'Unknown')}\nText: ${String(match.metadata?.text ?? '')}`)
       .join('\n\n');
 
-    console.log(context);
+
+
+
+
+    console.log("Tgiz is contexr", context);
+    console.log("****************");
 
     const google = createGoogleGenerativeAI({
       baseURL: 'https://generativelanguage.googleapis.com/v1beta',
       apiKey: process.env.GEMINI_API_KEY
     });
 
-    const model = google('models/gemini-1.5-pro-latest', {
+    const model = google('models/gemini-1.5-flash', {
       safetySettings: [
         { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
       ],
     });
 
-    // Generate SQL query
-    const generatedSQL = await generateQuery(query);
-    console.log(generatedSQL)
-    const sqlResults = await runGeneratedSQLQuery(generatedSQL);
-    const sqlExplanation = await explainQuery(query, generatedSQL);
+
+    // const llm = new Ollama({
+    //   model: "llama3.2", // Default value
+    //   temperature: 0,
+    //   maxRetries: 2,
+    //   // other params...
+    // });
+
 
     const final_prompt = `
-    Context: ${context}
-
-    User Query: ${query}
-    Generated SQL Query: ${generatedSQL}
-    SQL Results: ${JSON.stringify(sqlResults)}
-    Explanation of SQL Query: ${JSON.stringify(sqlExplanation)}
-
-    Please provide a comprehensive and detailed answer to the user's query.
+     Context: ${context} and the question is ${query} Please provide a comprehensive and detailed answer to the user's query and Cite the book name at the end of quries.
     `;
 
-    console.log(context)
-    console.log(query)
-    console.log(final_prompt)
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("This is final prompt", final_prompt)
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("thisa is qurey", query)
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++");
+    console.log("thisa is contttttt", context)
 
     const result = await streamText({
       model: model,
-      system: 'Your job is to genrate the answers to the given question make the answer is clean clear in a strucured format',
+      system: 'Your job is to genrate the answers to the given question make the answer is clean clear in a strucured format if no context is given the return s0s if no question is provided then return s1s',
       prompt: final_prompt,
+
 
     });
 
+    // console.log("This is resukt",result)
     return result.toDataStreamResponse();
 
-  } catch (error) {
-    console.error('Error in chat route:', error);
+  } catch (error: unknown) {
+    console.error('Error in chat route:', error instanceof Error ? error.message : 'Unknown error');
     return new Response(
       JSON.stringify({ error: 'An error occurred while processing your request' }),
       {
