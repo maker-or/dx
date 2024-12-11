@@ -62,13 +62,13 @@ export default function Page() {
             >
               {m.role === 'user' ? (
                 <div className="flex items-start gap-4 font-serif">
-                  <div className="max-w-xl text-[3rem] text-[#215783] rounded-xl p-4">
+                  <div className="max-w-xl text-[3rem] text-[#ff5e00b3] tracking-tight  rounded-xl p-4">
                     <h1 className="whitespace-pre-wrap">{m.content}</h1>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-start gap-2">
-                  <div className="max-w-screen-lg tracking-tight text-[#c1f0c066] text-[1.4rem] rounded-xl p-4">
+                  <div className="max-w-screen-lg tracking-tight text-[#f7eee3a7] text-[1.4rem] rounded-xl p-4">
                     <p className="whitespace-pre-wrap">{m.content}</p>
                   </div>
                   {/* Buttons for Google Search */}

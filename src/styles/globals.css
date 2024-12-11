@@ -31,10 +31,12 @@ body{
 
 .folder-top {
   width: 40%;
-  height: 24px;
-  background-color: #f7eee3;
+  height: 27px;
+  background-color: #F7EEE3;
+  border-top: 2px solid #F7EEE3;
+  border-left: 2px solid #F7EEE3;
   border-top-left-radius: 10px;
-  /* border-top-right-radius: 10px; */
+  border-top-right-radius: 12px;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -44,25 +46,27 @@ body{
 .folder-top::after {
   content: '';
   position: absolute;
-  background-color: #f7eee3;
+  background-color: #F7EEE3;
   top: 0;
   right: -20px;
-  width: 20px;
-  height: 22px;
+  width: 25px;
+  height: 26px;
   z-index: 1;
-  clip-path: polygon(0% 0%, 0% 101%, 100% 101%, 50% 0%);
+  clip-path: polygon(0% 60%,0% 121%, 180% 200%, 0% 0%);
 
   
 }
 
 .folder-body {
-  width: 100%;
-  height: 70%;
-  background-color: #f7eee3;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  border-top-right-radius: 12px;
+  width: 90%;
+  height: 69%;
+  background-color: #F7EEE3;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
   position: relative;
+  border: 1px solid #f7eee320;
+  box-shadow : -10px 10px 16px -1px rgba(16, 16, 16, 0.368)
 }
 
 .folderContainer::-webkit-scrollbar {

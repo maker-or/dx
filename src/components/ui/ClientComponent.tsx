@@ -97,7 +97,7 @@ const ClientComponent: React.FC<ClientComponentProps> = ({ images }) => {
           >
             <div
               onClick={() => openPdfViewer(image.url)}
-              className="relative w-[250px] h-[220px] rounded-xl bg-gradient-to-tr from-[#0c0c0c] via-[#ff5e007b] to-[#0c0c0c] border-2 border-[#f7eee3] cursor-pointer"
+              className="relative w-[250px] h-[220px] rounded-xl  backdrop-blur-lg bg-[#f7eee3] border-2 border-[#f7eee3] cursor-pointer"
             >
               <div className="absolute bottom-0 right-0 w-full bg-[#f7eee3] text-[#0c0c0c] text-md font-medium px-3 py-1 rounded-b-xl text-nowrap">
                 {image.name}

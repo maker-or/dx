@@ -400,11 +400,11 @@ const CommandPlate = () => {
     }
     //bg-gradient-to-tl from-[#0c0c0c] via-[#080300ac] to-[#0c0500fa]
     return (
-      <div className="bg-[#0c0c0c]/60 backdrop-blur-2xl text-[#f7eee3] rounded-3xl p-6 w-1/2  shadow-2xl border border-[#f7eee338] relative overflow-hidden ">
+      <div className="bg-[#0c0c0c] backdrop-blur-3xl text-[#f7eee3] rounded-xl   py-3 w-1/2  shadow-2xl border border-[#f7eee338] relative overflow-hidden ">
         {/* Glassmorphic background effect */}
-        <div className="absolute inset-0 bg-[#0c0c0c] opacity-50 backdrop-blur-2xl -z-10 blur-2xl"></div>
+        <div className="absolute inset-0 bg-[#0c0c0c] opacity-50 backdrop-blur-3xl -z-10 blur-2xl"></div>
 
-        <div className="relative mb-6 flex gap-2 text-[#0c0c0c]">
+        <div className="relative mb-6 flex gap-2 border-b-2  border-[#f7eee338] w-full text-[#0c0c0c]">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f7eee3] p-2 bg-[#0c0c0c] z-10 rounded-sm"
             size={38}
@@ -420,14 +420,14 @@ const CommandPlate = () => {
               if (e.key === "Enter") handleCommandSelection();
             }}
             placeholder="Search Anything..."
-            className="w-full pl-16 p-4 bg-gradient-to-r from-[#f7eee3] to-[#ABABAB] backdrop-blur-md text-[#0c0c0c] rounded-xl border border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#0c0c0c]"
+            className="w-full pl-16 p-4 border-none bg-[#0c0c0c]/60 backdrop-blur-3xl text-[#f7eee3] rounded-xl border border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#f7eee3]"
           />
         </div>
 
 
-        <ul className="max-h-60 overflow-y-autospace-y-2">
+        <ul className="max-h-60 overflow-y-autospace-y-2 m-2">
           {filteredCommands.length === 0 ? (
-            <li className="text-[#f7eee3]/50 text-center py-4">No commands found</li>
+            <li className="text-[#f7eee3]/50 text-center px-3 py-4">No commands found</li>
           ) : (
             filteredCommands.map((command, index) => (
               <li
@@ -435,8 +435,8 @@ const CommandPlate = () => {
                 className={`
                   p-3  cursor-pointer transition-all duration-200
                   ${index === selectedIndex
-                    ? ' border-b-2 border-[#f7eee323] text-orange-500 rounded-sm'
-                    : 'hover:bg-[#f7eee3]/10 border-b-2 border-[#f7eee323]'}
+                    ? '  text-orange-500 rounded-sm bg-[#f7eee3]/10 '
+                    : 'hover:bg-[#f7eee3]/10 '}
                 `}
                 onClick={handleCommandSelection}
               >

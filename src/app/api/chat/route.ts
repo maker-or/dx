@@ -49,7 +49,7 @@ export async function POST(req: Request): Promise<Response> {
     console.log("in route ", queryEmbedding);
 
     // Query Pinecone
-    const index = pinecone.index('books');
+    const index = pinecone.index('dwm');
     const queryResponse = await index.namespace('').query({
       vector: queryEmbedding,
       topK: 5,
