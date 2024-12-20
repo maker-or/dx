@@ -27,7 +27,7 @@ export async function PATCH(request: Request) {
     const updatedTask = await db
       .update(tasks)
       .set({ task, date })
-      .where(eq(tasks.taskId, parseInt(id, 10)))
+      .where(eq(tasks.tasksId, parseInt(id, 10)))
       .returning();
 
     return NextResponse.json(updatedTask);
