@@ -26,7 +26,7 @@ export default function RootLayout({
         <html lang="en" className={`font-sans`}>
           <body>
             <SignedOut>
-              <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#0c0c0c]">
+              <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#0c0c0c] 	scroll-behavior: auto;">
                 <SignIn routing="hash" />
               </div>
             </SignedOut>

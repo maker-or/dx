@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Plus, Check, ChevronLeft, Search, Pause, Play, RotateCw } from 'lucide-react';
 import { useChat } from 'ai/react';
+import { SignOutButton } from '@clerk/nextjs'
 
 const TaskComponent = ({ onClose }: { onClose: () => void }) => {
   const [tasks, setTasks] = useState<
@@ -138,6 +139,9 @@ const TaskComponent = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
+const Logout = () => {
+  return <SignOutButton />
+}
 
 
 const PomodoroComponent = ({ onClose }: { onClose: () => void }) => {
@@ -215,6 +219,7 @@ const ChatComponent = ({ onClose }: { onClose: () => void }) => {
     handleSubmit: aiHandleSubmit,
   } = useChat({
     initialMessages: [],
+    api:'/api/chat/server',
   });
 
   // const [submitted, setSubmitted] = useState(false);
@@ -307,32 +312,29 @@ const CommandPlate = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [activeView, setActiveView] = useState<'commands' | 'task' | 'timer' | 'Sphere Intelligence'>('commands');
+  const [activeView, setActiveView] = useState<'commands' | 'task' | 'timer' | 'Sphere Intelligence' | 'logout'>('commands');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const commands = [
-    { name: 'Task', shortcut: '⌘ T', icon: 'check' },
-    { name: 'Timer', shortcut: '⌘ I', icon: 'clock' },
-    { name: 'Sphere Intelligence', shortcut: '⌘ S', icon: 'globe' },
-    { name: 'Logout', shortcut: '⌘ ,', icon: 'settings' },
+    { name: 'Task', shortcut: '⌘ T', icon: 'check', handler: () => setActiveView('task') },
+    { name: 'Timer', shortcut: '⌘ I', icon: 'clock', handler: () => setActiveView('timer') },
+    { name: 'Sphere Intelligence', shortcut: '⌘ S', icon: 'globe', handler: () => setActiveView('Sphere Intelligence') },
+    { name: 'Logout', shortcut: '⌘ ,', icon: 'settings', handler: () => setActiveView('logout') },
   ];
 
-  // Focus search input when command plate opens
+  // Focus management and keyboard shortcuts [unchanged]
   useEffect(() => {
     if (isOpen) {
       searchInputRef.current?.focus();
     }
   }, [isOpen]);
 
-  // Keyboard shortcut to open/close command plate
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Check for Cmd+K or Ctrl+K
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         setIsOpen((prev) => !prev);
       }
-      // Escape key to close
       if (e.key === 'Escape') {
         setIsOpen(false);
         setActiveView('commands');
@@ -355,17 +357,17 @@ const CommandPlate = () => {
     }
   };
 
-  const handleCommandSelection = () => {
-    const selectedCommand = filteredCommands[selectedIndex];
-    if (selectedCommand?.name === 'Task') {
-      setActiveView('task');
-    } else if (selectedCommand?.name === 'Timer') {
-      setActiveView('timer');
-    } else if (selectedCommand?.name === 'Sphere Intelligence') {
-      setActiveView('Sphere Intelligence');
+  // Enhanced mouse click handling
+  const handleCommandSelection = (command?: { name: string; handler: () => void }) => {
+    if (command) {
+      command.handler();
     } else {
-      setActiveView('commands');
+      const selectedCommand = filteredCommands[selectedIndex];
+      selectedCommand?.handler();
     }
+    
+    // Optional: clear search query after selection
+    setSearchQuery('');
   };
 
   const renderContent = () => {
@@ -398,13 +400,15 @@ const CommandPlate = () => {
         />
       );
     }
-    //bg-gradient-to-tl from-[#0c0c0c] via-[#080300ac] to-[#0c0500fa]
-    return (
-      <div className="bg-[#0c0c0c] backdrop-blur-3xl text-[#f7eee3] rounded-xl   py-3 w-1/2  shadow-2xl border border-[#f7eee338] relative overflow-hidden ">
-        {/* Glassmorphic background effect */}
-        <div className="absolute inset-0 bg-[#0c0c0c] opacity-50 backdrop-blur-3xl -z-10 blur-2xl"></div>
+    else if (activeView === 'logout') {
+      return (
+        <Logout/>
+      );
+    }
 
-        <div className="relative mb-6 flex gap-2 border-b-2  border-[#f7eee338] w-full text-[#0c0c0c]">
+    return (
+      <div className="bg-[#0c0c0c] backdrop-blur-3xl text-[#f7eee3] rounded-xl py-3 w-1/2 shadow-2xl border border-[#f7eee338] relative overflow-hidden">
+        <div className="relative mb-6 flex gap-2 border-b-2 border-[#f7eee338] w-full text-[#0c0c0c]">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f7eee3] p-2 bg-[#0c0c0c] z-10 rounded-sm"
             size={38}
@@ -420,12 +424,11 @@ const CommandPlate = () => {
               if (e.key === "Enter") handleCommandSelection();
             }}
             placeholder="Search Anything..."
-            className="w-full pl-16 p-4 border-none bg-[#0c0c0c]/60 backdrop-blur-3xl text-[#f7eee3] rounded-xl border border-[#f7eee3]/20 focus:outline-none  placeholder:text-[#f7eee3]"
+            className="w-full pl-16 p-4 border-none bg-[#0c0c0c]/60 backdrop-blur-3xl text-[#f7eee3] rounded-xl border border-[#f7eee3]/20 focus:outline-none placeholder:text-[#f7eee3]"
           />
         </div>
 
-
-        <ul className="max-h-60 overflow-y-autospace-y-2 m-2">
+        <ul className="max-h-60 overflow-y-auto space-y-2 m-2">
           {filteredCommands.length === 0 ? (
             <li className="text-[#f7eee3]/50 text-center px-3 py-4">No commands found</li>
           ) : (
@@ -433,16 +436,19 @@ const CommandPlate = () => {
               <li
                 key={command.name}
                 className={`
-                  p-3  cursor-pointer transition-all duration-200
+                  p-3 cursor-pointer transition-all duration-200
                   ${index === selectedIndex
-                    ? '  text-orange-500 rounded-sm bg-[#f7eee3]/10 '
-                    : 'hover:bg-[#f7eee3]/10 '}
+                    ? 'text-orange-500 rounded-sm bg-[#f7eee3]/10'
+                    : 'hover:bg-[#f7eee3]/10'
+                  }
                 `}
-                onClick={handleCommandSelection}
+                // Add explicit mouse click handler for each command
+                onClick={() => handleCommandSelection(command)}
+                // Improved keyboard navigation
+                onMouseEnter={() => setSelectedIndex(index)}
               >
                 <div className="flex justify-between items-center">
                   <span>{command.name}</span>
-                  {/* <span className="text-[#f7eee3]/80 text-sm">{command.shortcut}</span> */}
                 </div>
               </li>
             ))
@@ -455,7 +461,16 @@ const CommandPlate = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center  justify-center bg-[#0c0c0c]/60 ">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0c0c]/60"
+      onClick={(e) => {
+        // Close command plate when clicking outside the content
+        if (e.target === e.currentTarget) {
+          setIsOpen(false);
+          setActiveView('commands');
+        }
+      }}
+    >
       {renderContent()}
     </div>
   );

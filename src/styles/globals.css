@@ -85,3 +85,7 @@ body{
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.custom-inset {
+  box-shadow : inset 7px 7px 16px 2px rgb(62, 24, 2)
+}

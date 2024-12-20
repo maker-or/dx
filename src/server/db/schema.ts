@@ -14,7 +14,7 @@ export const createTable = pgTableCreator((name) => `gallery_${name}`);
 export const folders = createTable(
   "folders",
   {
-    folderId: integer("folderId").primaryKey().generatedAlwaysAsIdentity(), // Auto-incrementing folder ID
+    folderId: integer("folderId").primaryKey(),
     folderName: varchar("folderName", { length: 256 }).notNull(),           // Name of the folder
     userId: varchar("userId", { length: 1024 }).notNull(),                 // ID of the user who created the folder
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -29,7 +29,7 @@ export const folders = createTable(
   })
 );
 
-// Then define the posts table
+// files
 export const posts = createTable(
   "post",
   {
@@ -50,14 +50,16 @@ export const posts = createTable(
   }),
 );
 
-// Define the tasks table
+//planner
 export const tasks = createTable(
   "tasks",
   {
-    taskId: integer("taskId").primaryKey().generatedAlwaysAsIdentity(),   // Auto-incrementing task ID
+    tasksId: integer("taskId").primaryKey().generatedAlwaysAsIdentity(),   // Auto-incrementing task ID
     userId: varchar("userId", { length: 1024 }).notNull(),                // ID of the user who created the task
     task: varchar("task", { length: 255 }).notNull(),                     // Task description or title
-    date: varchar("date").notNull(),                                       // Date when the task is created or due
+    date: varchar("date").notNull(),
+    month:varchar("month").notNull(),
+    year:varchar("year").notNull(),                                   // Date when the task is created or due
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),                                                           // Timestamp for task creation
@@ -67,5 +69,26 @@ export const tasks = createTable(
   },
   (tasks) => ({
     userIndex: index("use_idx").on(tasks.userId),                       // Index on userId for faster lookups
+  })
+);
+
+
+//todo or task
+export const dod = createTable(
+  "dod",
+  {
+    doId: integer("doId").primaryKey().generatedAlwaysAsIdentity(),  // Auto-incrementing task ID
+    userId: varchar("userId", { length: 1024 }).notNull(),                // ID of the user who created the task
+    task: varchar("task", { length: 255 }).notNull(),
+    completed:varchar("completed",{ length: 255 }).notNull(),              // Task description or title                                       // Date when the task is created or due
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),                                                           // Timestamp for task creation
+    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+      () => new Date(),                                                    // Timestamp for task updates
+    ),
+  },
+  (dod) => ({
+    userIndex: index("dod_idx").on(dod.userId),                       // Index on userId for faster lookups
   })
 );

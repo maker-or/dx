@@ -15,7 +15,10 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			colors: {}
+			colors: {},
+			boxShadow: {
+				'custom-inset': 'inset 7px 5px 13px 1px rgba(153, 56, 0, 1)',
+			  },
 		}
 	},
 	plugins: [],

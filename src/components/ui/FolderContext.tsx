@@ -1,4 +1,4 @@
-'use client'; // Add this at the top
+'use client'; 
 
 import React, { createContext, useContext, useState } from "react";
 
@@ -6,6 +6,8 @@ interface FolderContextType {
   folderName: string;
   setFolderName: (name: string) => void;
 }
+
+
 
 const FolderContext = createContext<FolderContextType | undefined>(undefined);
 

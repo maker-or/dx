@@ -1,53 +1,51 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { db } from "~/server/db";
+// import { db } from "~/server/db";
 import { getAuth } from "@clerk/nextjs/server";
-import { posts } from "~/server/db/schema";
-
+// import { posts } from "~/server/db/schema";
 
 
 const f = createUploadthing();
 
-export const ourFileRouter = {
-  imageUploader: f({ pdf: { maxFileSize: "4MB", maxFileCount: 40 } })
-    .middleware(async ({ req }) => {
-      // Use Clerk's getAuth function to authenticate the user
-      const { userId } = getAuth(req);
+  export const ourFileRouter = {
+    imageUploader: f({ pdf: { maxFileSize: "4MB", maxFileCount: 40 } })
+      .middleware(async ({ req }) => {
 
-      // If user is not authenticated, throw an error
-      if (!userId) throw new Error("Unauthorized");
+        const { userId } = getAuth(req);
 
-      // Get the current URL from the request
-      const url = new URL(req.url, `http://${req.headers.get('host')}`);
-      console.log("url", url);
-      
-      // Extract the last character from the pathname
-      const lastChar = url.pathname.slice(-1);
-      console.log("lastChar", lastChar);
+        if (!userId) throw new Error("Unauthorized");
 
 
-      
-      // Convert to number if possible, otherwise default to 1
-      const folderId = lastChar && !isNaN(Number(lastChar)) ? Number(lastChar) : 1;
+        // const customMetadata = req.headers.get("x-uploadthingx-metadat");
+        // console.log("customMetadata", customMetadata);
+       // let folderId = 2; // Default value
+        // if (customMetadata) {
+        //   try {
+        //     const parsedMetadata = JSON.parse(customMetadata) as { folderId: string };
+        //     folderId = parseInt(parsedMetadata.folderId, 10) || 2; 
+        //   } catch (error) {
+        //     console.error("Failed to parse metadata:", error);
+        //   }
+        // }
+          
 
-      // Pass both userId and folderId to onUploadComplete
-      return { userId, folderId };
-    })
+        return { userId };
+      })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for userId:", metadata.userId);
-      console.log("file url", file.url);
-      console.log("folder id:", metadata.folderId);
+    
+      // console.log("Upload complete for folderId:", metadata.folderId);
 
-      // Insert uploaded file details into the database
-      await db.insert(posts).values({
-        name: file.name,
-        url: file.url,
-        userId: metadata.userId,
-        folderId: metadata.folderId, // Use the extracted folderId
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-
-      return { uploadedBy: metadata.userId, folderId: metadata.folderId };
+      // await db.insert(posts).values({
+      //   id:100,
+      //   name: file.name,
+      //   url: file.url,
+      //   userId: metadata.userId,
+      //   folderId:2, 
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      // });
+      console.log("file information",file);
+      return {...file,
+        userId: metadata.userId};
     }),
 } satisfies FileRouter;
 

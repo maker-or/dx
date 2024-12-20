@@ -4,6 +4,7 @@ import { type ConvertibleMessage } from '~/utils/types';
 import { streamText } from "ai";
 import { Pinecone } from '@pinecone-database/pinecone';
 
+
 // import { Ollama } from "@langchain/ollama";
 // import {fetchYouTubeVideos} from'~/app/api/chat/youtube'
 // import { runGeneratedSQLQuery, generateQuery, explainQuery } from '~/app/api/chat/action';
