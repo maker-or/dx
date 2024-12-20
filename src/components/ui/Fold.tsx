@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Folder from "~/components/ui/Folder";
 import { useFolder } from "~/components/ui/FolderContext";
 import Group from "~/components/ui/Group";
+import { v4 as uuidv4 } from "uuid";
 
 interface FolderType {
   folderId: number;
@@ -34,11 +35,28 @@ const Fold = () => {
     void fetchFolders();
   }, []);
 
+  const generateId = () => {
+    const id = uuidv4();
+    console.log("id:", id);
+    const a = id.split("-").join("");
+    console.log("generatedId:", a);
+    console.log("dafesgrdthyfkugi", a);
+
+    let hash = 0;
+    for (let i = 0; i < a.length; i++) {
+        hash = (hash << 5) - hash + a.charCodeAt(i); // Bitwise hash
+        hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+   
+  };
+  // const ans=generateId()
   // Function to add a new folder
   const addFolder = async () => {
     try {
+      const ans=generateId()
       const newFolderName = `${folderName} ${folders.length + 1}`;
-      const newFolderId = folders.length + 1;
+      const newFolderId = ans  ;
       const response = await fetch("/api/folder", {
         method: "POST",
         headers: {
