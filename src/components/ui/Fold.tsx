@@ -96,7 +96,7 @@ const Fold = () => {
       <div className="-ml-12 flex w-full overflow-x-auto font-serif md:ml-0 md:pl-12">
         {folders.map((folder) => (
           <Folder
-            key={folder.id}
+            key={folder.folderId}
             folderName={folder.folderName}
             folderId={folder.folderId} // Add this line
           />

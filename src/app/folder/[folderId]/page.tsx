@@ -4,11 +4,12 @@ import Greeting from '~/components/ui/Greeting';
 import Navbar from '~/components/ui/Navbar';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     folderId: number;
-  };
+  }>;
 }
-export default function FolderPage({ params }: PageProps) {
+export default async function FolderPage(props: PageProps) {
+  const params = await props.params;
   const folderId = parseInt(params.folderId.toString());
 
   return (
