@@ -26,7 +26,7 @@ type SubjectsByBranch = Record<Branch, Subject>;
 // Define subjects for different branches
 const subjects: SubjectsByBranch = {
   CSE: {
-    "Artificial Intelligence": {
+    "DSA": {
       Notes:"https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI-All%20Units.pdf?alt=media&token=c57ad992-412f-436e-8d66-35a7abc83cf5",
       chapter1:'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20I%20R20.pdf?alt=media&token=0fc404c5-bcf6-47d4-a9c1-4bbb30133999',
       'chapter2':'https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20II.pdf?alt=media&token=a0182391-b3df-48d0-939d-db6a821509e4',
@@ -38,7 +38,7 @@ const subjects: SubjectsByBranch = {
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FAI%20-%20UNIT%20V%20GRD.pdf?alt=media&token=a07c3c1a-5e3b-48af-8286-d9c5e2b23566",
 
     },
-    "Computer Networks": {
+    "Java": {
       "Chapter 1":
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FCN%2FCN%20UNIT%201.pdf?alt=media&token=8a3ffd90-ccde-4439-b8a6-e22862c9e9df",
       "Chapter 2":
@@ -50,7 +50,7 @@ const subjects: SubjectsByBranch = {
       "Chapter 5":
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/404.png?alt=media&token=4ecab361-4c2e-461e-b5b2-49a49971361a",
     },
-    DWM: {
+    'DAA': {
       "Chapter 1":
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FDWM%2FDWDM%20Unit%201.pdf?alt=media&token=fdec5cef-9e2c-414e-8744-366f5a8361d7",
       "Chapter 2":
@@ -66,7 +66,7 @@ const subjects: SubjectsByBranch = {
       textbook:
         "https://firebasestorage.googleapis.com/v0/b/file-c6979.appspot.com/o/CSE%2FDWM%2FVipin%20Kumar_Text%20Book.pdf?alt=media&token=35e87e92-5351-4b64-aa8c-7e8d197e90b8",
     },
-    FED: {
+    ADS: {
       "HTML":
         "https://developer.mozilla.org/en-US/docs/Web/HTML",
       "React":
@@ -285,7 +285,7 @@ const Page = () => {
       <Navbar />
 
       {/* Branch Selection */}
-      <div className="mb-6 mt-4 flex items-center gap-8 overflow-x-auto  lg:justify-center">
+      {/* <div className="mb-6 mt-4 flex items-center gap-8 overflow-x-auto  lg:justify-center">
         {branches.map((branch) => (
           <button
             key={branch}
@@ -295,27 +295,28 @@ const Page = () => {
             }}
             className={`rounded-full px-8 py-2 ${
               selectedBranch === branch
-                ? "bg-[#434080] text-white"
+                ? "bg-[#0f7b7c] text-white"
                 : "bg-[#454545] text-[#f7eee3]"
             }`}
           >
             {branch}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Selection between Notes and Question Papers */}
       {selectedSubject === null ? (
-        <div className="flex flex-wrap gap-6 overflow-x-auto items-center justify-center">
+        <div className="flex flex-col gap-12 overflow-x-auto items-center justify-center mt-6">
           {Object.keys(subjects[selectedBranch] || {}).map((subject) => (
             <div
               key={subject}
               onClick={() => setSelectedSubject(subject)}
-              className="relative flex h-[220px] w-[250px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-[#f7eee3] bg-gradient-to-l from-[#0c0c0c] via-[#434080] to-[#0c0c0c]"
+              className="relative flex  w-full cursor-pointer flex-col p-3 text-3xl text-[#f7eee3]  border-b-2 border-[#f7eee334] hover:text-orange-600 hover:text-4xl"
             >
-              <div className="absolute bottom-0 right-0 w-full rounded-b-xl bg-[#f7eee3] px-3 py-1 text-center text-lg font-medium text-[#0c0c0c]">
+              {/* <div className="absolute bottom-0 right-0 w-full rounded-b-xl bg-[#f7eee3] px-3 py-1 text-center text-lg font-medium text-[#0c0c0c]">
                 {subject}
-              </div>
+              </div> */}
+              {subject}
             </div>
           ))}
         </div>
@@ -324,7 +325,7 @@ const Page = () => {
           <div className="mt-16 flex items-center justify-between p-2">
             <button
               onClick={() => setSelectedSubject(null)}
-              className="mb-4 flex rounded py-2 text-sm text-[#f7eee3] hover:text-[#434080] lg:text-lg"
+              className="mb-4 flex rounded-full py-2 text-sm text-[#f7eee3] hover:text-[#0f7b7c] lg:text-lg"
             >
               <StepBack />
               
@@ -333,13 +334,13 @@ const Page = () => {
             <div className="mb-4 flex gap-4">
               <button
                 onClick={() => setSelectedType("notes")}
-                className={`rounded-md px-3 text-sm py-2 lg:px-4 ${selectedType === "notes" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
+                className={`rounded-xl px-3 text-sm py-2 lg:px-4 ${selectedType === "notes" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
               >
                 Notes
               </button>
               <button
                 onClick={() => setSelectedType("questionPapers")}
-                className={`rounded-md px-4 py-2 ${selectedType === "questionPapers" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
+                className={`rounded-xl px-4 py-2 ${selectedType === "questionPapers" ? "bg-[#f7eee3] text-[#0c0c0c]" : "bg-[#454545] text-[#f7eee3]"}`}
               >
                 Question Papers
               </button>
@@ -354,8 +355,11 @@ const Page = () => {
                 Object.entries(subjects[selectedBranch][selectedSubject]).map(
                   ([chapter, link]) => (
                     <Link key={chapter} href={link} target="_blank">
-                      <div className="relative flex h-[220px] w-[250px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-[#f7eee3] bg-gradient-to-l from-[#0c0c0c] via-[#434080] to-[#0c0c0c]">
+                      <div className="custom-inset relative h-[220px] w-[250px] cursor-pointer rounded-xl border-2 border-[#f7eee3] bg-[#FF5E00] backdrop-blur-lg">
+                        <div className="text-md absolute bottom-0 right-0 w-full text-nowrap rounded-b-xl bg-[#f7eee3] px-3 py-1 font-medium text-[#0c0c0c]">
                         {chapter}
+                        </div>
+                        
                       </div>
                     </Link>
                   ),
@@ -368,7 +372,7 @@ const Page = () => {
                 href={`https://cloud.link/to/${selectedBranch}/${selectedSubject}/qp1`}
                 target="_blank"
               >
-                <div className="flex h-[100px] w-[200px] items-center justify-center rounded-lg bg-[#434080] p-2 text-center text-white ">
+                <div className="flex h-[100px] w-[200px] items-center justify-center rounded-lg bg-[#0f7b7c] p-2 text-center text-white ">
                   Question Paper 1
                 </div>
               </Link>

@@ -25,7 +25,7 @@ const Navbar = () => {
           <li className="px-2">
             <Link href="/repo">
               <button
-                className={`rounded-full px-4 py-3 ${isActive('/repo') ? 'bg-[#434080] text-[#f7eee3]' : ''
+                className={`rounded-full px-4 py-3 ${isActive('/repo') ? 'bg-[#FF5E00] text-[#f7eee3]' : ''
                   }`}
               >
                 Repos

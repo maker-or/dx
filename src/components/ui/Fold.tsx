@@ -44,19 +44,18 @@ const Fold = () => {
 
     let hash = 0;
     for (let i = 0; i < a.length; i++) {
-        hash = (hash << 5) - hash + a.charCodeAt(i); // Bitwise hash
-        hash = hash & hash; // Convert to 32-bit integer
+      hash = (hash << 5) - hash + a.charCodeAt(i); // Bitwise hash
+      hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash);
-   
   };
   // const ans=generateId()
   // Function to add a new folder
   const addFolder = async () => {
     try {
-      const ans=generateId()
+      const ans = generateId();
       const newFolderName = `${folderName} ${folders.length + 1}`;
-      const newFolderId = ans  ;
+      const newFolderId = ans;
       const response = await fetch("/api/folder", {
         method: "POST",
         headers: {
@@ -83,7 +82,7 @@ const Fold = () => {
   }
 
   return (
-    <div className="items-left justify-left flex w-full flex-col gap-2">
+    <div className="items-left justify-left flex w-full flex-col gap-1">
       <Group />
       <div id="addNew" className="flex w-full items-center justify-between">
         <h2 className="font-serif text-xl text-white">Notebooks</h2>
@@ -94,7 +93,7 @@ const Fold = () => {
           +
         </button>
       </div>
-      <div className="flex w-full overflow-x-auto font-serif">
+      <div className="-ml-12 flex w-full overflow-x-auto font-serif md:ml-0 md:pl-12">
         {folders.map((folder) => (
           <Folder
             key={folder.id}

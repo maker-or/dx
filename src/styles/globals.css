@@ -89,3 +89,14 @@ body{
 .custom-inset {
   box-shadow : inset 7px 7px 16px 2px rgb(62, 24, 2)
 }
+
+
+
+.custom-op {
+  
+  box-shadow : inset 7px 10px 36px 10px rgb(21, 15, 12)
+}
+
+/* .custom {
+  box-shadow : inset 7px 7px 16px 2px rgb(163, 72, 27)
+} */
